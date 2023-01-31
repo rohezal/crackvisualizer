@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->parameterContrastDivisor,SIGNAL(valueChanged(int)),this,SLOT(changeContrastDivisor(int)));
 	connect(this,SIGNAL(triggerAutomaticUpdate()),this,SLOT(automaticUpdate()));
 	connect(ui->buttonUpdate,SIGNAL(pressed()),this,SLOT(manualUpdate()));
-
+	connect(ui->slider_constrast_divisor,SIGNAL(sliderMoved(int)),ui->parameterContrastDivisor,SLOT(setValue(int)));
 }
 
 MainWindow::~MainWindow()
