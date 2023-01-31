@@ -19,12 +19,21 @@ public:
 
 public slots:
 	void changeText();
-
+	void changeContrastDivisor(int value);
+	void automaticUpdate();
+	void manualUpdate();
 
 
 
 private:
 	Ui::MainWindow *ui;
+
+	float contrastDivisor;
+
+signals:
+	void triggerAutomaticUpdate();
+	void triggerManualUpdate();
+
 };
 
 #endif // MAINWINDOW_H

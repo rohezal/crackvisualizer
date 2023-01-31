@@ -45,9 +45,26 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QCheckBox" name="liveUpdatecheckBox">
+         <property name="text">
+          <string>Live Update</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="text2">
          <property name="text">
           <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="parameterContrastDivisor">
+         <property name="minimum">
+          <number>-100</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
          </property>
         </widget>
        </item>
@@ -66,15 +83,28 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="buttonUpdate">
          <property name="text">
-          <string>Full Run</string>
+          <string>Manual Update</string>
          </property>
         </widget>
        </item>
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="debuglabel">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>360</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Debug</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
