@@ -22,6 +22,7 @@ public slots:
 	void changeContrastDivisor(int value);
 	void automaticUpdate();
 	void manualUpdate();
+	void sliderConstrastDivisorReleased();
 
 
 

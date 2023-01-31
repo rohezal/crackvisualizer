@@ -26,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(this,SIGNAL(triggerAutomaticUpdate()),this,SLOT(automaticUpdate()));
 	connect(ui->buttonUpdate,SIGNAL(pressed()),this,SLOT(manualUpdate()));
 	connect(ui->slider_constrast_divisor,SIGNAL(sliderMoved(int)),ui->parameterContrastDivisor,SLOT(setValue(int)));
+	connect(ui->slider_constrast_divisor,SIGNAL(sliderReleased()),this,SLOT(sliderConstrastDivisorReleased()));
+	connect(this,SIGNAL(triggerManualUpdate()),this,SLOT(manualUpdate()));
+
 }
 
 MainWindow::~MainWindow()
@@ -55,4 +58,12 @@ void MainWindow::automaticUpdate()
 void MainWindow::manualUpdate()
 {
 	ui->debuglabel->setText(QString::number(contrastDivisor));
+}
+
+void MainWindow::sliderConstrastDivisorReleased()
+{
+	//ui->parameterContrastDivisor->setValue(ui->slider_constrast_divisor->value());
+	//contrastDivisor = ((float)ui->slider_constrast_divisor->value()) / 10;
+	emit triggerManualUpdate();
+
 }
