@@ -29,11 +29,14 @@ LIBS += -lopencv_shape -lopencv_stitching -lopencv_superres -lopencv_videostab -
 
 
 SOURCES += \
+        imageviewer.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        imageviewer.h \
         mainwindow.h
 
 FORMS += \
+        imageviewer.ui \
         mainwindow.ui

@@ -1,45 +1,46 @@
 //#ifndef IMAGEVIEWER_H
 //#define IMAGEVIEWER_H
 
-//#include <QObject>
-//#include <QMainWindow>
+//#include <QWidget>
 
 //namespace Ui {
 //class ImageViewer;
 //}
 
-//class ImageViewer : public QMainWindow
+//class ImageViewer : public QWidget
 //{
 //    Q_OBJECT
 
 //public:
-//    ImageViewer(QWidget *parent = nullptr);
-//    bool loadFile(const QString &);
+//    explicit ImageViewer(QWidget *parent = 0);
+
+//    // functions to load the image into the ImageViewer
+//    bool loadImage();
+//    void setFilePath(const QString& filepath);
 
 //private slots:
-//    void open();
+//    // buttonActions for zooming
 //    void zoomIn();
 //    void zoomOut();
-//    void normalSize();
 //    void fitToWindow();
 
+//protected:
+//    // events for resizing window or using the mouswheel
+//    void resizeEvent(QResizeEvent *event) override;
+//    void wheelEvent(QWheelEvent *event) override;
+
 //private:
-//    void createActions();
-//    void createMenus();
-//    void updateActions();
-//    void setImage(const QImage &newImage);
-//    void scaleImage(double factor);
-//    void adjustScrollBar(QScrollBar *scrollBar, double factor);
+//    // functions to scale the image
+//    QPixmap scaledImage();
+//    void setScaledImage();
+//    QSize getScaledSize();
 
-//    QImage image;
-//    QLabel *imageLabel;
-//    QScrollArea *scrollArea;
-//    double scaleFactor = 1;
+//    // variables for the image
+//    UI::ImageViewer *ui;
+//    QPixmap t_image;
+//    double t_scaleFactor = 1.0;
+//    QString t_filePath;
 
-//    QAction *zoomInAct;
-//    QAction *zoomOutAct;
-//    QAction *normalSizeAct;
-//    QAction *fitToWindowAct;
 //};
 
 //#endif // IMAGEVIEWER_H
