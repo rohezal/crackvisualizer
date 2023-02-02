@@ -32,7 +32,11 @@ private:
 	Ui::MainWindow *ui;
 
 	ImageViewer* imageviewer;
+	ImageViewer* imageviewerContrast;
 	float contrastDivisor;
+	cv::Mat inputImage;
+	cv::Mat contrastImage;
+	cv::Mat combinedImage;
 
 signals:
 	void triggerAutomaticUpdate();

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1600</width>
-    <height>461</height>
+    <width>900</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
-    <height>400</height>
+    <width>0</width>
+    <height>500</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
      <x>0</x>
      <y>10</y>
      <width>1602</width>
-     <height>441</height>
+     <height>435</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -59,7 +59,7 @@
       <property name="minimumSize">
        <size>
         <width>1600</width>
-        <height>400</height>
+        <height>260</height>
        </size>
       </property>
       <property name="horizontalScrollBarPolicy">
@@ -71,16 +71,16 @@
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>-16</x>
+         <x>-2</x>
          <y>0</y>
          <width>1600</width>
-         <height>400</height>
+         <height>384</height>
         </rect>
        </property>
        <property name="minimumSize">
         <size>
          <width>1600</width>
-         <height>400</height>
+         <height>250</height>
         </size>
        </property>
        <property name="contextMenuPolicy">
@@ -92,13 +92,13 @@
           <x>370</x>
           <y>40</y>
           <width>1600</width>
-          <height>390</height>
+          <height>250</height>
          </rect>
         </property>
         <property name="minimumSize">
          <size>
           <width>1600</width>
-          <height>390</height>
+          <height>250</height>
          </size>
         </property>
         <property name="maximumSize">

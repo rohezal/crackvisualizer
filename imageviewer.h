@@ -11,12 +11,14 @@ class ImageViewer : public QWidget
 
 public:
 	explicit ImageViewer(QString _image, QWidget *parent = 0);
+	explicit ImageViewer(QPixmap _pixmap, QWidget *parent = 0);
 	~ImageViewer();
 
 
 	// functions to load the image into the ImageViewer
 	bool loadImage();
 	void setFilePath(const QString& filepath);
+	void setPixMap(QPixmap _pixmap);
 
 private slots:
 	// buttonActions for zooming

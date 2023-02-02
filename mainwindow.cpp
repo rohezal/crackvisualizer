@@ -7,12 +7,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	cv::Mat cvimage;
 
-	cvimage = cv::imread("jessica.png");
-	cv::Mat converedImage = cvimage;
 
-	QPixmap tempimage = QPixmap::fromImage(QImage((unsigned char*) cvimage.data, cvimage.cols, cvimage.rows, QImage::Format_RGB888).rgbSwapped());
+	inputImage = cv::imread("jessica.png");
+
+
+	QPixmap tempimage = QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888).rgbSwapped());
 
 	//image->DataPtr = tempimage.data_ptr();
 
@@ -29,9 +29,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->slider_constrast_divisor,SIGNAL(sliderReleased()),this,SLOT(sliderConstrastDivisorReleased()));
 	connect(this,SIGNAL(triggerManualUpdate()),this,SLOT(manualUpdate()));
 
-	this->imageviewer = new ImageViewer("jessica.png", this);
+	this->imageviewer = new ImageViewer(tempimage, nullptr);
+	//this->imageviewer = new ImageViewer("jessica2.png", nullptr);
+	//this->imageviewerContrast = new ImageViewer("jessica.png", this);
 
 	ui->imageLayout->addWidget(this->imageviewer);
+	//ui->imageLayout->addWidget(this->imageviewerContrast);
 	//this->setCentralWidget(this->imageviewer);
 
 }
@@ -63,6 +66,7 @@ void MainWindow::automaticUpdate()
 void MainWindow::manualUpdate()
 {
 	ui->debuglabel->setText(QString::number(contrastDivisor));
+	this->imageviewer->setPixMap(QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888).rgbSwapped()));
 }
 
 void MainWindow::sliderConstrastDivisorReleased()

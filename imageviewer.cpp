@@ -32,6 +32,26 @@ ImageViewer::ImageViewer(QString _image, QWidget *parent)    : QWidget(parent), 
 
 }
 
+ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), ui(new Ui::ImageViewer), t_image(_pixmap)
+{
+	ui->setupUi(this);
+
+	ui->scrollArea->setBackgroundRole(QPalette::Dark);
+
+	// set the scrollArea as imageLabel
+	ui->imageLabel->setParent(this);
+	delete ui->scrollArea->takeWidget();
+	ui->scrollAreaWidgetContents = nullptr;
+	ui->scrollArea->setWidget(ui->imageLabel);
+
+	// actions to the buttons
+	connect(ui->zoomInButton, SIGNAL(pressed()), this, SLOT(zoomIn()));
+	connect(ui->zoomOutButton, SIGNAL(pressed()), this, SLOT(zoomOut()));
+	connect(ui->fitToWindowButton, SIGNAL(pressed()), this, SLOT(fitToWindow()));
+
+	setScaledImage();
+}
+
 ImageViewer::~ImageViewer()
 {
 	delete ui;
@@ -41,6 +61,12 @@ ImageViewer::~ImageViewer()
 void ImageViewer::setFilePath(const QString& filePath)
 {
 	t_filePath = filePath;
+}
+
+void ImageViewer::setPixMap(QPixmap _pixmap)
+{
+	t_image = _pixmap;
+	setScaledImage();
 }
 
 bool ImageViewer::loadImage()

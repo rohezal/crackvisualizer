@@ -38,7 +38,7 @@
          <widget class="QLabel" name="imagelabel">
           <property name="maximumSize">
            <size>
-            <width>1600</width>
+            <width>1610</width>
             <height>16777215</height>
            </size>
           </property>
