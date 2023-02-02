@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <opencv.hpp>
 #include <opencv2/imgproc.hpp>
+#include "imageviewer.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,12 +24,14 @@ public slots:
 	void automaticUpdate();
 	void manualUpdate();
 	void sliderConstrastDivisorReleased();
+	void exportParameters();
 
 
 
 private:
 	Ui::MainWindow *ui;
 
+	ImageViewer* imageviewer;
 	float contrastDivisor;
 
 signals:

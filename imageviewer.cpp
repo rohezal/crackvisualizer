@@ -1,13 +1,19 @@
 #include "imageviewer.h"
 
+/*
 ImageViewer::ImageViewer(QWidget *parent)
    : QWidget(parent), ui(new Ui::ImageViewer)
+{
+
+
+}*/
+
+
+ImageViewer::ImageViewer(QString _image, QWidget *parent)    : QWidget(parent), ui(new Ui::ImageViewer)
 {
 	ui->setupUi(this);
 
 	ui->scrollArea->setBackgroundRole(QPalette::Dark);
-
-	/*
 
 	// set the scrollArea as imageLabel
 	ui->imageLabel->setParent(this);
@@ -16,12 +22,15 @@ ImageViewer::ImageViewer(QWidget *parent)
 	ui->scrollArea->setWidget(ui->imageLabel);
 
 	// actions to the buttons
-	connect(ui->zoomInButton, SIGNAL(pressed()), SLOT(zoomIn()));
-	connect(ui->zoomOutButton, SIGNAL(pressed()), SLOT(zoomOut()));
-	connect(ui->fitToWindowButton, SIGNAL(pressed()), SLOT(fitToWindowButton()));
-	*/
-}
+	connect(ui->zoomInButton, SIGNAL(pressed()), this, SLOT(zoomIn()));
+	connect(ui->zoomOutButton, SIGNAL(pressed()), this, SLOT(zoomOut()));
+	connect(ui->fitToWindowButton, SIGNAL(pressed()), this, SLOT(fitToWindow()));
 
+	setFilePath(_image);
+	loadImage();
+
+
+}
 
 ImageViewer::~ImageViewer()
 {

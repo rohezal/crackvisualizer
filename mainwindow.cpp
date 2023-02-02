@@ -29,6 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->slider_constrast_divisor,SIGNAL(sliderReleased()),this,SLOT(sliderConstrastDivisorReleased()));
 	connect(this,SIGNAL(triggerManualUpdate()),this,SLOT(manualUpdate()));
 
+	this->imageviewer = new ImageViewer("jessica.png", this);
+
+	ui->imageLayout->addWidget(this->imageviewer);
+
 }
 
 MainWindow::~MainWindow()
@@ -66,4 +70,9 @@ void MainWindow::sliderConstrastDivisorReleased()
 	//contrastDivisor = ((float)ui->slider_constrast_divisor->value()) / 10;
 	emit triggerManualUpdate();
 
+}
+
+void MainWindow::exportParameters()
+{
+	return;
 }

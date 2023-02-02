@@ -10,7 +10,7 @@ class ImageViewer : public QWidget
 	Q_OBJECT
 
 public:
-	explicit ImageViewer(QWidget *parent = 0);
+	explicit ImageViewer(QString _image, QWidget *parent = 0);
 	~ImageViewer();
 
 
