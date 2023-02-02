@@ -88,6 +88,19 @@
        <height>269</height>
       </rect>
      </property>
+     <widget class="QLabel" name="imageLabel">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>50</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>imageLabel</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
