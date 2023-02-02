@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	this->imageviewer = new ImageViewer("jessica.png", this);
 
 	ui->imageLayout->addWidget(this->imageviewer);
+	//this->setCentralWidget(this->imageviewer);
 
 }
 
