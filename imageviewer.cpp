@@ -22,9 +22,6 @@ ImageViewer::ImageViewer(QString _image, QWidget *parent)    : QWidget(parent), 
 	ui->scrollArea->setWidget(ui->imageLabel);
 
 	// actions to the buttons
-	connect(ui->zoomInButton, SIGNAL(pressed()), this, SLOT(zoomIn()));
-	connect(ui->zoomOutButton, SIGNAL(pressed()), this, SLOT(zoomOut()));
-	connect(ui->fitToWindowButton, SIGNAL(pressed()), this, SLOT(fitToWindow()));
 
 	setFilePath(_image);
 	loadImage();
@@ -45,9 +42,6 @@ ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), u
 	ui->scrollArea->setWidget(ui->imageLabel);
 
 	// actions to the buttons
-	connect(ui->zoomInButton, SIGNAL(pressed()), this, SLOT(zoomIn()));
-	connect(ui->zoomOutButton, SIGNAL(pressed()), this, SLOT(zoomOut()));
-	connect(ui->fitToWindowButton, SIGNAL(pressed()), this, SLOT(fitToWindow()));
 
 	setScaledImage();
 }

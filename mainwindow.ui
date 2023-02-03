@@ -64,7 +64,7 @@
            <string>Live Update</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -78,7 +78,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="labelContrastDivisor">
             <property name="text">
              <string>Contr. Divisor</string>
             </property>
@@ -87,9 +87,15 @@
           <item>
            <widget class="QSpinBox" name="parameterContrastDivisor">
             <property name="minimum">
-             <number>-100</number>
+             <number>-400</number>
             </property>
             <property name="maximum">
+             <number>400</number>
+            </property>
+            <property name="singleStep">
+             <number>10</number>
+            </property>
+            <property name="value">
              <number>100</number>
             </property>
            </widget>
@@ -99,9 +105,12 @@
         <item>
          <widget class="QSlider" name="slider_constrast_divisor">
           <property name="minimum">
-           <number>-100</number>
+           <number>-400</number>
           </property>
           <property name="maximum">
+           <number>400</number>
+          </property>
+          <property name="value">
            <number>100</number>
           </property>
           <property name="orientation">

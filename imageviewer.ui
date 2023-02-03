@@ -30,31 +30,6 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="zoomOutButton">
-        <property name="text">
-         <string>-</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="zoomInButton">
-        <property name="text">
-         <string>+</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="fitToWindowButton">
-        <property name="text">
-         <string>Fit</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
      <widget class="QScrollArea" name="scrollArea">
       <property name="minimumSize">
        <size>
@@ -69,20 +44,6 @@
        <bool>true</bool>
       </property>
       <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>-2</x>
-         <y>0</y>
-         <width>1600</width>
-         <height>384</height>
-        </rect>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>1600</width>
-         <height>250</height>
-        </size>
-       </property>
        <property name="contextMenuPolicy">
         <enum>Qt::NoContextMenu</enum>
        </property>

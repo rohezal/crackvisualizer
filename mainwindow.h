@@ -5,6 +5,7 @@
 #include <opencv.hpp>
 #include <opencv2/imgproc.hpp>
 #include "imageviewer.h"
+#include <crackdetection/functions.h>
 
 namespace Ui {
 class MainWindow;
@@ -33,9 +34,11 @@ private:
 
 	ImageViewer* imageviewer;
 	ImageViewer* imageviewerContrast;
+	ImageViewer* imageviewerCombined;
 	float contrastDivisor;
 	cv::Mat inputImage;
 	cv::Mat contrastImage;
+	cv::Mat contrastImageFilled;
 	cv::Mat combinedImage;
 
 signals:
