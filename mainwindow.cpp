@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	//image->DataPtr = tempimage.data_ptr();
 
 	//ui->horizontalLayout->addItem(image);
-	ui->imagelabel->setPixmap(tempimage);
 
 
 	//connect(ui->mybutton,SIGNAL(pressed()), ui->text1,SLOT(clear()));
@@ -31,15 +30,19 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->slider_constrast_divisor,SIGNAL(sliderMoved(int)),ui->parameterContrastDivisor,SLOT(setValue(int)));
 	connect(ui->slider_constrast_divisor,SIGNAL(sliderReleased()),this,SLOT(sliderConstrastDivisorReleased()));
 	connect(this,SIGNAL(triggerManualUpdate()),this,SLOT(manualUpdate()));
+	connect(ui->overlayCheckbox,SIGNAL(clicked(bool)),this,SLOT(switchOverlay()));
 
 	this->imageviewer = new ImageViewer(tempimage, nullptr);
+	this->imageviewerContrast = new ImageViewer(tempimage, nullptr);
 	this->imageviewerCombined = new ImageViewer(tempimage, nullptr);
 
 	ui->imageLayout->addWidget(this->imageviewer);
+	ui->imageLayout->addWidget(this->imageviewerContrast);
 	ui->imageLayout->addWidget(this->imageviewerCombined);
 
 	ui->labelContrastDivisor->setToolTip("High values lowers the amount of constract increase, contrast_improved_value = pixel_value * sqrt(pixel_value) / contrast_divisor.");
 
+	manualUpdate();
 }
 
 MainWindow::~MainWindow()
@@ -68,7 +71,6 @@ void MainWindow::automaticUpdate()
 
 void MainWindow::manualUpdate()
 {
-	ui->debuglabel->setText(QString::number(contrastDivisor));
 	//this->imageviewer->setPixMap(QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888).rgbSwapped()));
 
 	contrastImageFilled = crackDetectionRash(inputImage,contrastImage);
@@ -81,9 +83,10 @@ void MainWindow::manualUpdate()
 	combinedImage = combinedImage*2 + inputImage;
 
 
-	imageviewer->setPixMap(QPixmap::fromImage(QImage((unsigned char*) contrastImageFilled.data, contrastImageFilled.cols, contrastImageFilled.rows, QImage::Format_Grayscale8)));
+	imageviewerContrast->setPixMap(QPixmap::fromImage(QImage((unsigned char*) contrastImageFilled.data, contrastImageFilled.cols, contrastImageFilled.rows, QImage::Format_Grayscale8)));
 	imageviewerCombined->setPixMap(QPixmap::fromImage(QImage((unsigned char*) combinedImage.data, combinedImage.cols, combinedImage.rows, QImage::Format_RGB888)));
 
+	switchOverlay();
 }
 
 void MainWindow::sliderConstrastDivisorReleased()
@@ -97,4 +100,16 @@ void MainWindow::sliderConstrastDivisorReleased()
 void MainWindow::exportParameters()
 {
 	return;
+}
+
+void MainWindow::switchOverlay()
+{
+	if(ui->overlayCheckbox->isChecked())
+	{
+		imageviewer->setPixMap(QPixmap::fromImage(QImage((unsigned char*) combinedImage.data, combinedImage.cols, combinedImage.rows, QImage::Format_RGB888)));
+	}
+	else
+	{
+		imageviewer->setPixMap(QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888)));
+	}
 }

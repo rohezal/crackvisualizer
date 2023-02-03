@@ -26,6 +26,7 @@ public slots:
 	void manualUpdate();
 	void sliderConstrastDivisorReleased();
 	void exportParameters();
+	void switchOverlay();
 
 
 
