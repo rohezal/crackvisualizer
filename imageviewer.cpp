@@ -25,8 +25,6 @@ ImageViewer::ImageViewer(QString _image, QWidget *parent)    : QWidget(parent), 
 
 	setFilePath(_image);
 	loadImage();
-
-
 }
 
 ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), ui(new Ui::ImageViewer), t_image(_pixmap)
