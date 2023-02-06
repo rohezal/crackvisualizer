@@ -6,6 +6,7 @@
 #include <opencv2/imgproc.hpp>
 #include "imageviewer.h"
 #include <crackdetection/functions.h>
+#include <QMessageBox>
 
 namespace Ui {
 class MainWindow;

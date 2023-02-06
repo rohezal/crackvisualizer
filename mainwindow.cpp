@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->slider_constrast_divisor,SIGNAL(sliderReleased()),this,SLOT(sliderConstrastDivisorReleased()));
 	connect(this,SIGNAL(triggerManualUpdate()),this,SLOT(manualUpdate()));
 	connect(ui->overlayCheckbox,SIGNAL(clicked(bool)),this,SLOT(switchOverlay()));
+	connect(ui->exportButton,SIGNAL(pressed()),this,SLOT(exportParameters()));
 
 	this->imageviewer = new ImageViewer(tempimage, nullptr);
 	this->imageviewerContrast = new ImageViewer(tempimage, nullptr);
@@ -147,7 +148,26 @@ void MainWindow::sliderConstrastDivisorReleased()
 
 void MainWindow::exportParameters()
 {
-	return;
+	QString message;
+	message =
+	"--contrast_divisor " + QString::number(contrast_divisor) + " " +
+	"--preprocessing_treshold_divisor " +QString::number(preprocessing_treshold_divisor) + " " +
+	"--contrast_subtractor_divisor " +QString::number(contrast_subtractor_divisor) + " " +
+	"--preprocessing_treshold_adder " +QString::number(preprocessing_treshold_adder) + " " +
+	"--contrast_hsv_substractor_divisor " +QString::number(contrast_hsv_substractor_divisor) + " ";
+
+
+	QMessageBox msgBox;
+	msgBox.setText(message);
+	msgBox.exec();
+
+
+	//contrast_divisor
+	//preprocessing_treshold_divisor
+	//contrast_subtractor_divisor
+	//preprocessing_treshold_adder
+	//contrast_hsv_substractor_divisor
+
 }
 
 void MainWindow::switchOverlay()
