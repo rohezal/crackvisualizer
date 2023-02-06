@@ -42,6 +42,7 @@ ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), u
 	// actions to the buttons
 
 	setScaledImage();
+	ui->scrollArea->ensureWidgetVisible(ui->imageLabel);
 }
 
 ImageViewer::~ImageViewer()
@@ -95,6 +96,11 @@ QPixmap ImageViewer::scaledImage()
 	if(!t_image.isNull()) {
 		scaledPixmap = t_image.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 	}
+
+	resize(sizeHint());
+	ui->scrollArea->resize(ui->scrollArea->sizeHint());
+
+
 	return scaledPixmap;
 }
 

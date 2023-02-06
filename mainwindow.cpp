@@ -9,7 +9,18 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"), "~", tr("Image Files (*.png)"));
+	QStringList argv = QCoreApplication::arguments();
+	QString fileName = "";
+
+	if(argv.size() == 2)
+	{
+		fileName = argv[1];
+	}
+
+	else
+	{
+		fileName = QFileDialog::getOpenFileName(this,tr("Open Image"), "~", tr("Image Files (*.png)"));
+	}
 
 	cv::Mat temp = cv::imread(fileName.toStdString().c_str());
 	cv::cvtColor(temp, inputImage, cv::COLOR_RGB2BGR);
@@ -25,6 +36,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	//connect(ui->mybutton,SIGNAL(pressed()), ui->text1,SLOT(clear()));
 
 	connect(ui->parameterContrastDivisor,SIGNAL(valueChanged(int)),this,SLOT(changeContrastDivisor(int)));
+
+	connect(ui->parameterContrastSubstractor,SIGNAL(valueChanged(int)),this,SLOT(change_contrast_subtractor_divisor(int)));
+	connect(ui->parameterHSVSubtractor,SIGNAL(valueChanged(int)),this,SLOT(change_contrast_hsv_substractor_divisor(int)));
+	connect(ui->parameterSobelTresholdAdder,SIGNAL(valueChanged(int)),this,SLOT(change_preprocessing_treshold_adder(int)));
+	connect(ui->parameterSobelTresholdDivisor,SIGNAL(valueChanged(int)),this,SLOT(change_preprocessing_treshold_divisor(int)));
+
+
 	connect(this,SIGNAL(triggerAutomaticUpdate()),this,SLOT(automaticUpdate()));
 	connect(ui->buttonUpdate,SIGNAL(pressed()),this,SLOT(manualUpdate()));
 	connect(ui->slider_constrast_divisor,SIGNAL(sliderMoved(int)),ui->parameterContrastDivisor,SLOT(setValue(int)));
@@ -60,6 +78,36 @@ void MainWindow::changeContrastDivisor(int value)
 	contrast_divisor = ((float)value) / 10;
 	emit triggerAutomaticUpdate();
 }
+
+void MainWindow::change_preprocessing_treshold_divisor(int value)
+{
+	preprocessing_treshold_divisor = ((float)value) / 10;
+	emit triggerAutomaticUpdate();
+}
+
+void MainWindow::change_contrast_subtractor_divisor(int value)
+{
+	contrast_subtractor_divisor = ((float)value) / 10;
+	emit triggerAutomaticUpdate();
+}
+
+void MainWindow::change_preprocessing_treshold_adder(int value)
+{
+	preprocessing_treshold_adder = ((float)value) / 10;
+	emit triggerAutomaticUpdate();
+}
+
+void MainWindow::change_contrast_hsv_substractor_divisor(int value)
+{
+	contrast_hsv_substractor_divisor = ((float)value) / 10;
+	emit triggerAutomaticUpdate();
+}
+
+//preprocessing_treshold_divisor
+//contrast_subtractor_divisor
+//preprocessing_treshold_adder
+//contrast_hsv_substractor_divisor
+
 
 void MainWindow::automaticUpdate()
 {
