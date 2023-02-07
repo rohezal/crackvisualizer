@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->parameterSobelTresholdAdder,SIGNAL(valueChanged(int)),this,SLOT(change_preprocessing_treshold_adder(int)));
 	connect(ui->parameterSobelTresholdDivisor,SIGNAL(valueChanged(int)),this,SLOT(change_preprocessing_treshold_divisor(int)));
 
+	//connect slider and extra buttons
 
 	connect(this,SIGNAL(triggerAutomaticUpdate()),this,SLOT(automaticUpdate()));
 	connect(ui->buttonUpdate,SIGNAL(pressed()),this,SLOT(manualUpdate()));
@@ -50,6 +51,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(this,SIGNAL(triggerManualUpdate()),this,SLOT(manualUpdate()));
 	connect(ui->overlayCheckbox,SIGNAL(clicked(bool)),this,SLOT(switchOverlay()));
 	connect(ui->exportButton,SIGNAL(pressed()),this,SLOT(exportParameters()));
+
+	//connect save and load
+	connect(ui->buttonSave,SIGNAL(pressed()),this,SLOT(save()));
+	connect(ui->buttonLoad,SIGNAL(pressed()),this,SLOT(load()));
 
 	this->imageviewer = new ImageViewer(tempimage, nullptr);
 	this->imageviewerContrast = new ImageViewer(tempimage, nullptr);
@@ -156,6 +161,7 @@ void MainWindow::exportParameters()
 	"--preprocessing_treshold_adder " +QString::number(preprocessing_treshold_adder) + " " +
 	"--contrast_hsv_substractor_divisor " +QString::number(contrast_hsv_substractor_divisor) + " ";
 
+	QGuiApplication::clipboard()->setText(message);
 
 	QMessageBox msgBox;
 	msgBox.setText(message);
@@ -180,4 +186,24 @@ void MainWindow::switchOverlay()
 	{
 		imageviewer->setPixMap(QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888)));
 	}
+}
+
+void MainWindow::save()
+{
+	saved_contrast_divisor = contrast_divisor;
+	saved_contrast_subtractor_divisor=contrast_subtractor_divisor;
+	saved_contrast_hsv_substractor_divisor=contrast_hsv_substractor_divisor;
+	saved_preprocessing_treshold_divisor=preprocessing_treshold_divisor;
+	saved_preprocessing_treshold_adder=preprocessing_treshold_adder;
+}
+
+void MainWindow::load()
+{
+	ui->parameterContrastDivisor->setValue(saved_contrast_divisor*10);
+	ui->parameterContrastSubstractor->setValue(saved_contrast_subtractor_divisor*10);
+	ui->parameterHSVSubtractor->setValue(saved_contrast_hsv_substractor_divisor*10);
+	ui->parameterSobelTresholdAdder->setValue(saved_preprocessing_treshold_adder*10);
+	ui->parameterSobelTresholdDivisor->setValue(saved_preprocessing_treshold_divisor*10);
+	manualUpdate();
+
 }
