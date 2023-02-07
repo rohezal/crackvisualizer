@@ -113,10 +113,10 @@
           <item>
            <widget class="QSpinBox" name="parameterContrastSubstractor">
             <property name="minimum">
-             <number>-400</number>
+             <number>-1000</number>
             </property>
             <property name="maximum">
-             <number>400</number>
+             <number>1000</number>
             </property>
             <property name="singleStep">
              <number>10</number>
@@ -167,10 +167,10 @@
           <item>
            <widget class="QSpinBox" name="parameterSobelTresholdAdder">
             <property name="minimum">
-             <number>-400</number>
+             <number>-1000</number>
             </property>
             <property name="maximum">
-             <number>400</number>
+             <number>1000</number>
             </property>
             <property name="singleStep">
              <number>10</number>
