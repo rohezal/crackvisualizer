@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->labelContrastDivisor->setToolTip("High values lowers the amount of constract increase, contrast_improved_value = pixel_value * sqrt(pixel_value) / contrast_divisor.");
 
 	manualUpdate();
+	imageviewerContrast->enableRightClick();
 }
 
 MainWindow::~MainWindow()

@@ -62,6 +62,16 @@ void ImageViewer::setPixMap(QPixmap _pixmap)
 	setScaledImage();
 }
 
+void ImageViewer::enableRightClick()
+{
+	rightclick_enabled = true;
+}
+
+void ImageViewer::disableRightClick()
+{
+	rightclick_enabled = false;
+}
+
 bool ImageViewer::loadImage()
 {
 	if(t_filePath.isEmpty())
@@ -132,6 +142,21 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
 		else
 		{
 			zoomOut();
+		}
+	}
+}
+
+void ImageViewer::mouseReleaseEvent(QMouseEvent *qevent)
+{
+	if (qevent->button() == Qt::MouseButton::RightButton)
+	{
+		if(rightclick_enabled)
+		{
+			QString filename = QFileDialog::getSaveFileName();
+			if(!filename.isEmpty())
+			{
+				t_image.save(filename);
+			}
 		}
 	}
 }
