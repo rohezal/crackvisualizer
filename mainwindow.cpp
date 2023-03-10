@@ -124,24 +124,63 @@ void MainWindow::automaticUpdate()
 	}
 }
 
+Mat MainWindow::colorizeIslandImage(Mat &labelImage, int nLabels)
+{
+	std::vector<Vec3b> colors(nLabels);
+	colors[0] = Vec3b(0, 0, 0);//background
+	for(int label = 1; label < nLabels; ++label){
+		colors[label] = Vec3b( label%3==0? 50+label*10%256 : (label%3==1 ? label*5%256 : label) , label%3==1? 50+label*10%256 : (label%3==2 ? label*5%256 : label), 50+label%3==2 ? label*10%256 : (label%3==0 ? label*5%256 : label));
+	}
+	Mat dst(inputImage.size(), CV_8UC3);
+	for(int r = 0; r < dst.rows; ++r){
+		for(int c = 0; c < dst.cols; ++c){
+			int label = labelImage.at<int>(r, c);
+			Vec3b &pixel = dst.at<Vec3b>(r, c);
+			pixel = colors[label];
+		 }
+	 }
+
+	cv::Mat temp;
+	cv::cvtColor(dst, temp, cv::COLOR_RGB2BGR);
+
+
+	return temp;
+}
+
+
 void MainWindow::manualUpdate()
 {
 	//this->imageviewer->setPixMap(QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888).rgbSwapped()));
 
-	contrastImageFilled = crackDetectionRash(inputImage,contrastImage);
+	//contrastImageFilled = crackDetectionRash(inputImage,contrastImage);
 
-	cv::cvtColor(contrastImageFilled, combinedImage , CV_GRAY2RGB);
+	IslandData data;
 
-	std::cout << inputImage.rows << " " << inputImage.cols << std::endl;
-	std::cout << contrastImageFilled.rows << " " << contrastImageFilled.cols << std::endl;
+	cv::cvtColor(inputImage, contrastImage, CV_BGR2GRAY);
 
-	combinedImage = combinedImage*2 + inputImage;
+	calculateIslandImage(contrastImage,data);
+
+	std::cout << "Labels: " << data.number_of_labels << std::endl;
+
+	contrastImageFilled = colorizeIslandImage(data.islandImage,data.number_of_labels);
+	combinedImage = contrastImageFilled.clone();
+
+	/*
+	String windowName = "The Guitar"; //Name of the window
+	namedWindow(windowName); // Create a window
+	imshow(windowName, contrastImageFilled); // Show our image inside the created window.
+	waitKey(0); // Wait for any keystroke in the window
+	*/
+
+	combinedImage = combinedImage*2 + inputImage/10;
 
 
-	imageviewerContrast->setPixMap(QPixmap::fromImage(QImage((unsigned char*) contrastImageFilled.data, contrastImageFilled.cols, contrastImageFilled.rows, QImage::Format_Grayscale8)));
+	imageviewerContrast->setPixMap(QPixmap::fromImage(QImage((unsigned char*) contrastImageFilled.data, contrastImageFilled.cols, contrastImageFilled.rows, QImage::Format_RGB888)));
 	imageviewerCombined->setPixMap(QPixmap::fromImage(QImage((unsigned char*) combinedImage.data, combinedImage.cols, combinedImage.rows, QImage::Format_RGB888)));
 
 	switchOverlay();
+
+	//calculateIslands
 }
 
 void MainWindow::sliderConstrastDivisorReleased()

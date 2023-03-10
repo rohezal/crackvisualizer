@@ -8,6 +8,7 @@
 #include <crackdetection/functions.h>
 #include <QMessageBox>
 #include <QClipboard>
+#include <crackdetection/islands.h>
 
 
 namespace Ui {
@@ -38,7 +39,7 @@ public slots:
 	void switchOverlay();
 	void save();
 	void load();
-
+	Mat colorizeIslandImage(cv::Mat& labelImage, int nLabels);
 
 
 private:
