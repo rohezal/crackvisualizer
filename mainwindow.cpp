@@ -25,8 +25,23 @@ MainWindow::MainWindow(QWidget *parent) :
 	cv::Mat temp = cv::imread(fileName.toStdString().c_str());
 	cv::cvtColor(temp, inputImage, cv::COLOR_RGB2BGR);
 
+
+	cv::imwrite("read_temp.png",temp);
+	cv::imwrite("read_colorcerversion.png",inputImage);
+
+
+	QImage image_from_mat = QImage((const unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, inputImage.step, QImage::Format_RGB888);
+	image_from_mat.save("read_qimage.png");
+
 	//QPixmap tempimage = QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888).rgbSwapped());
-	QPixmap tempimage = QPixmap::fromImage(QImage((unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, QImage::Format_RGB888));
+	QPixmap tempimage = QPixmap::fromImage(QImage((const unsigned char*) inputImage.data, inputImage.cols, inputImage.rows, inputImage.step, QImage::Format_RGB888));
+
+
+	QFile file("read_qpixmap.png");
+	file.open(QIODevice::WriteOnly);
+	tempimage.save(&file, "PNG");
+	file.close();
+
 
 	//image->DataPtr = tempimage.data_ptr();
 

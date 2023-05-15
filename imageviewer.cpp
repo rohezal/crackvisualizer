@@ -29,9 +29,16 @@ ImageViewer::ImageViewer(QString _image, QWidget *parent)    : QWidget(parent), 
 
 ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), ui(new Ui::ImageViewer), t_image(_pixmap)
 {
+
+	QFile file("read_image_imageviewer_pixmap.png");
+	file.open(QIODevice::WriteOnly);
+	t_image.save(&file, "PNG");
+	file.close();
+
+
 	ui->setupUi(this);
 
-	ui->scrollArea->setBackgroundRole(QPalette::Dark);
+	//ui->scrollArea->setBackgroundRole(QPalette::Dark);
 
 	// set the scrollArea as imageLabel
 	ui->imageLabel->setParent(this);
@@ -42,7 +49,7 @@ ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), u
 	// actions to the buttons
 
 	setScaledImage();
-	ui->scrollArea->ensureWidgetVisible(ui->imageLabel);
+	//ui->scrollArea->ensureWidgetVisible(ui->imageLabel);
 }
 
 ImageViewer::~ImageViewer()
@@ -90,6 +97,9 @@ bool ImageViewer::loadImage()
 
 void ImageViewer::setScaledImage()
 {
+	//ui->imageLabel->setFixedSize(t_image.size());
+	ui->imageLabel->setPixmap(t_image);
+	return;
 	QPixmap scaledPixmap = this->scaledImage();
 	if(!scaledPixmap.isNull())
 	{
@@ -101,6 +111,7 @@ void ImageViewer::setScaledImage()
 
 QPixmap ImageViewer::scaledImage()
 {
+	return t_image;
 	QSize scaledSize = getScaledSize();
 	QPixmap scaledPixmap;
 	if(!t_image.isNull()) {
@@ -116,6 +127,7 @@ QPixmap ImageViewer::scaledImage()
 
 QSize ImageViewer::getScaledSize()
 {
+	return t_image.size();
 	QSize scaledSize = size();
 	scaledSize *= t_scaleFactor;
 	scaledSize.setWidth(scaledSize.width() - 5);
@@ -126,12 +138,14 @@ QSize ImageViewer::getScaledSize()
 
 void ImageViewer::resizeEvent(QResizeEvent *event)
 {
+	return;
 	QWidget::resizeEvent(event);
 	setScaledImage();
 }
 
 void ImageViewer::wheelEvent(QWheelEvent *event)
 {
+	return;
 	int delta = event->delta();
 	if(QApplication::keyboardModifiers() & Qt::ControlModifier)
 	{
@@ -148,6 +162,7 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
 
 void ImageViewer::mouseReleaseEvent(QMouseEvent *qevent)
 {
+	return;
 	if (qevent->button() == Qt::MouseButton::RightButton)
 	{
 		if(rightclick_enabled)
@@ -163,18 +178,21 @@ void ImageViewer::mouseReleaseEvent(QMouseEvent *qevent)
 
 void ImageViewer::zoomIn()
 {
+	return;
 	t_scaleFactor += 0.3;
 	setScaledImage();
 }
 
 void ImageViewer::zoomOut()
 {
+	return;
 	t_scaleFactor -= 0.3;
 	setScaledImage();
 }
 
 void ImageViewer::fitToWindow()
 {
+	return;
 	t_scaleFactor = 1.0;
 	setScaledImage();
 }
