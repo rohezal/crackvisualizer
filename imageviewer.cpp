@@ -49,6 +49,8 @@ ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), u
 	ui->graphicsView->setScene(&scene);
 	ui->graphicsView->show();
 
+	//https://stackoverflow.com/questions/19113532/qgraphicsview-zooming-in-and-out-under-mouse-position-using-mouse-wheel
+
 	// actions to the buttons
 
 	setScaledImage();
