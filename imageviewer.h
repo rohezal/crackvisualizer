@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QWheelEvent>
 #include <QFileDialog>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include "ui_imageviewer.h"
 
 class ImageViewer : public QWidget
@@ -47,7 +49,7 @@ private:
 	double t_scaleFactor = 1.0;
 	QString t_filePath;
 	bool rightclick_enabled = true;
-
+	QGraphicsScene scene;
 };
 
 #endif // IMAGEVIEWER_H

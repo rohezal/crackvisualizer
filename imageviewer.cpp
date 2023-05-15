@@ -16,10 +16,10 @@ ImageViewer::ImageViewer(QString _image, QWidget *parent)    : QWidget(parent), 
 	ui->scrollArea->setBackgroundRole(QPalette::Dark);
 
 	// set the scrollArea as imageLabel
-	ui->imageLabel->setParent(this);
+	ui->graphicsView->setParent(this);
 	delete ui->scrollArea->takeWidget();
 	ui->scrollAreaWidgetContents = nullptr;
-	ui->scrollArea->setWidget(ui->imageLabel);
+	ui->scrollArea->setWidget(ui->graphicsView);
 
 	// actions to the buttons
 
@@ -27,24 +27,27 @@ ImageViewer::ImageViewer(QString _image, QWidget *parent)    : QWidget(parent), 
 	loadImage();
 }
 
-ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), ui(new Ui::ImageViewer), t_image(_pixmap)
+ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), ui(new Ui::ImageViewer), t_image(_pixmap), scene()
 {
+	scene.addPixmap(t_image);
 
 	QFile file("read_image_imageviewer_pixmap.png");
 	file.open(QIODevice::WriteOnly);
 	t_image.save(&file, "PNG");
 	file.close();
 
-
 	ui->setupUi(this);
 
 	//ui->scrollArea->setBackgroundRole(QPalette::Dark);
 
 	// set the scrollArea as imageLabel
-	ui->imageLabel->setParent(this);
+	ui->graphicsView->setParent(this);
 	delete ui->scrollArea->takeWidget();
 	ui->scrollAreaWidgetContents = nullptr;
-	ui->scrollArea->setWidget(ui->imageLabel);
+	ui->scrollArea->setWidget(ui->graphicsView);
+
+	ui->graphicsView->setScene(&scene);
+	ui->graphicsView->show();
 
 	// actions to the buttons
 
@@ -98,13 +101,15 @@ bool ImageViewer::loadImage()
 void ImageViewer::setScaledImage()
 {
 	//ui->imageLabel->setFixedSize(t_image.size());
-	ui->imageLabel->setPixmap(t_image);
+	//ui->imageLabel->setPixmap(t_image);
 	return;
 	QPixmap scaledPixmap = this->scaledImage();
 	if(!scaledPixmap.isNull())
 	{
+		/*
 		ui->imageLabel->setFixedSize(scaledPixmap.size());
 		ui->imageLabel->setPixmap(scaledPixmap);
+		*/
 	}
 }
 
