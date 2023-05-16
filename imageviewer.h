@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 #include "ui_imageviewer.h"
 
 class ImageViewer : public QWidget
@@ -50,6 +51,7 @@ private:
 	QString t_filePath;
 	bool rightclick_enabled = true;
 	QGraphicsScene scene;
+	QGraphicsPixmapItem* pixmappointer;
 };
 
 #endif // IMAGEVIEWER_H
