@@ -52,6 +52,7 @@ private:
 	bool rightclick_enabled = true;
 	QGraphicsScene scene;
 	QGraphicsPixmapItem* pixmappointer;
+	float zoom_level = 1;
 };
 
 #endif // IMAGEVIEWER_H

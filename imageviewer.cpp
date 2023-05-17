@@ -31,10 +31,12 @@ ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), u
 {
 	pixmappointer = scene.addPixmap(t_image);
 
+	/*
 	QFile file("read_image_imageviewer_pixmap.png");
 	file.open(QIODevice::WriteOnly);
 	t_image.save(&file, "PNG");
 	file.close();
+	*/
 
 	ui->setupUi(this);
 
@@ -47,12 +49,14 @@ ImageViewer::ImageViewer(QPixmap _pixmap, QWidget *parent) :  QWidget(parent), u
 	ui->scrollArea->setWidget(ui->graphicsView);
 
 	ui->graphicsView->setScene(&scene);
+	ui->graphicsView->setAlignment( Qt::AlignLeft | Qt::AlignTop);
 	ui->graphicsView->show();
 
 	//https://stackoverflow.com/questions/19113532/qgraphicsview-zooming-in-and-out-under-mouse-position-using-mouse-wheel
 
 	// actions to the buttons
 
+	ui->graphicsView->fitInView(this->scene.sceneRect(), Qt::KeepAspectRatio);
 	setScaledImage();
 	//ui->scrollArea->ensureWidgetVisible(ui->imageLabel);
 }
@@ -102,12 +106,25 @@ bool ImageViewer::loadImage()
 
 void ImageViewer::setScaledImage()
 {
+	ui->graphicsView->resetTransform();
+	pixmappointer->setPixmap(t_image);
+	float value = 1+zoom_level;
+	value = value > 6 ? 6 : value;
+	value = value < 0.2 ? 0.2 : value;
+	ui->graphicsView->scale(value,value);
+	ui->graphicsView->update();
+
+	/*
 	QPixmap scaledPixmap = this->scaledImage();
 	if(!scaledPixmap.isNull())
 	{
-		pixmappointer->setPixmap(scaledPixmap);
-		pixmappointer->update();
+		//pixmappointer->setPixmap(scaledPixmap);
+		//pixmappointer->update();
+		pixmappointer->setPixmap(t_image);
+		//ui->graphicsView->scale(2,2);
+		ui->graphicsView->update();
 	}
+	*/
 }
 
 
@@ -122,6 +139,7 @@ QPixmap ImageViewer::scaledImage()
 
 	resize(sizeHint());
 	ui->scrollArea->resize(ui->scrollArea->sizeHint());
+
 	//pixmappointer->setPixmap(scaledPixmap);
 
 	return scaledPixmap;
@@ -177,12 +195,14 @@ void ImageViewer::mouseReleaseEvent(QMouseEvent *qevent)
 void ImageViewer::zoomIn()
 {
 	t_scaleFactor += 0.3;
+	zoom_level += 0.1;
 	setScaledImage();
 }
 
 void ImageViewer::zoomOut()
 {
 	t_scaleFactor -= 0.3;
+	zoom_level -= 0.1;
 	setScaledImage();
 }
 

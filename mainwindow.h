@@ -53,6 +53,9 @@ private:
 	cv::Mat contrastImageFilled;
 	cv::Mat combinedImage;
 
+	QImage lastInputImage;
+	QImage lastCombinedImage;
+
 	float saved_contrast_divisor = 100;
 	float saved_contrast_subtractor_divisor = 100;
 	float saved_contrast_hsv_substractor_divisor = 0;
