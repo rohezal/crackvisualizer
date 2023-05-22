@@ -183,49 +183,45 @@ void MainWindow::manualUpdate()
 	std::cout << "Depth: " << GetMatDepth(contrastImageFilled) << std::endl;
 
 	QPixmap debugQPixmap(contrastImageFilled.cols, contrastImageFilled.rows);
-	QImage debugQImage = debugQPixmap.toImage();
-	debugQImage = debugQImage.convertToFormat(QImage::Format_Grayscale8);
+	QImage hsvValueImage = debugQPixmap.toImage();
+	hsvValueImage = hsvValueImage.convertToFormat(QImage::Format_Grayscale8);
 	QImage combinedQImage = debugQPixmap.toImage();
 	combinedQImage = combinedQImage.convertToFormat(QImage::Format_RGB888);
 	QImage new_input_image = debugQPixmap.toImage();
 	new_input_image = new_input_image.convertToFormat(QImage::Format_RGB888);
 
-	const size_t dimy = debugQImage.height();
-	const size_t dimx = debugQImage.width();
+	const size_t dimy = hsvValueImage.height();
+	const size_t dimx = hsvValueImage.width();
+
+	const size_t bytes_per_pixel = combinedImage.elemSize();
+
+	/*
+	const size_t bytesPerLines = hsvValueImage.bytesPerLine();
+	std::cout << "dim x: " << dimx << " bytesPerLines: " << bytesPerLines << " == " << (dimx == bytesPerLines) << std::endl;
+	*/
 
 	#pragma omp parallel for
-	for(size_t a = 0; a < dimy ;a++)
+	for(size_t y = 0; y < dimy ;y++)
 	{
-		for(size_t b = 0; b < dimx;b++)
-		{
-			const uint8_t value = contrastImageFilled.at<uint8_t>(a,b);
-			const cv::Vec3b rgb_value = inputImage.at<cv::Vec3b>(a,b);
-			const cv::Vec3b rgb_mask = value > 0 ? cv::Vec3b(255,255,255) : cv::Vec3b(0,0,0)  ;
 
+		uchar* p_mat = contrastImageFilled.ptr(y);
+		uchar* p_qimage = hsvValueImage.scanLine(y);
+		memcpy(p_qimage,p_mat,dimx);
 
-			debugQImage.setPixelColor(b,a,value);
-			combinedQImage.setPixelColor(b,a, qRgb(value > 0 ? rgb_mask[0] : rgb_value[0], value > 0 ? rgb_mask[1] : rgb_value[1], value > 0 ? rgb_mask[2] : rgb_value[2]));
-			new_input_image.setPixelColor(b,a, qRgb(rgb_value[0], rgb_value[1], rgb_value[2]) );
-		}
+		uchar* p_mat_combined = combinedImage.ptr(y);
+		uchar* p_qimage_combined = combinedQImage.scanLine(y);
+		memcpy(p_qimage_combined,p_mat_combined,dimx*bytes_per_pixel);
+
+		uchar* p_mat_input = inputImage.ptr(y);
+		uchar* p_qimage_input= new_input_image.scanLine(y);
+		memcpy(p_qimage_input,p_mat_input,dimx*bytes_per_pixel);
 	}
 
 	lastCombinedImage = combinedQImage;
 	lastInputImage = new_input_image;
 
-	/*
-	QFile file("debugQ_Image.png");
-	file.open(QIODevice::WriteOnly);
-	debugQImage.save(&file, "PNG");
-	file.close();
-
-	QFile file_two("debugQ_combinedQImage.png");
-	file_two.open(QIODevice::WriteOnly);
-	combinedQImage.save(&file_two, "PNG");
-	file_two.close();
-	*/
-
 	imageviewer->setPixMap(QPixmap::fromImage(new_input_image));
-	imageviewerContrast->setPixMap(QPixmap::fromImage(debugQImage));
+	imageviewerContrast->setPixMap(QPixmap::fromImage(hsvValueImage));
 	imageviewerCombined->setPixMap(QPixmap::fromImage(combinedQImage));
 
 	switchOverlay();
