@@ -4,9 +4,6 @@
 #include <QWidget>
 #include <QWheelEvent>
 #include <QFileDialog>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsPixmapItem>
 #include "ui_imageviewer.h"
 
 class ImageViewer : public QWidget
@@ -50,9 +47,7 @@ private:
 	double t_scaleFactor = 1.0;
 	QString t_filePath;
 	bool rightclick_enabled = true;
-	QGraphicsScene scene;
-	QGraphicsPixmapItem* pixmappointer;
-	float zoom_level = 1;
+
 };
 
 #endif // IMAGEVIEWER_H
