@@ -200,7 +200,7 @@ void MainWindow::manualUpdate()
 		{
 			const uint8_t value = contrastImageFilled.at<uint8_t>(a,b);
 			const cv::Vec3b rgb_value = inputImage.at<cv::Vec3b>(a,b);
-			const cv::Vec3b rgb_mask = value > 0 ? Vec3b(255,255,255) : Vec3b(0,0,0)  ;
+			const cv::Vec3b rgb_mask = value > 0 ? cv::Vec3b(255,255,255) : cv::Vec3b(0,0,0)  ;
 
 
 			debugQImage.setPixelColor(b,a,value);
